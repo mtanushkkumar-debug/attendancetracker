@@ -2,13 +2,16 @@ name: Fullstack CI Pipeline
 
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
 
 jobs:
 
-  build-frontend:
+# =========================
+# 🔵 FRONTEND CI
+# =========================
+  frontend:
     runs-on: ubuntu-latest
 
     defaults:
@@ -27,19 +30,26 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
-      - name: Build React App
-        run: CI=false npm run build
+      # Optional test step (enable if needed)
+      # - name: Run frontend tests
+      #   run: npm test -- --watchAll=false
 
-      - name: Upload frontend build
+      - name: Build frontend
+        run: npm run build
+
+      - name: Upload frontend artifact
         uses: actions/upload-artifact@v4
         with:
           name: frontend-build
           path: frontend/build
 
 
-  build-backend:
+# =========================
+# 🟢 BACKEND CI
+# =========================
+  backend:
     runs-on: ubuntu-latest
 
     defaults:
@@ -57,11 +67,47 @@ jobs:
           java-version: 21
           cache: maven
 
-      - name: Build Spring Boot
+      - name: Build backend
         run: mvn clean install -DskipTests
+
+      # Optional test step (enable if needed)
+      # - name: Run backend tests
+      #   run: mvn test
 
       - name: Upload backend artifact
         uses: actions/upload-artifact@v4
         with:
           name: backend-jar
-          path: target/*.jar
+          path: backend/target/*.jar
+
+
+# =========================
+# 🟡 OPTIONAL DEPLOY (GENERIC)
+# =========================
+# This is placeholder for ANY deployment (server, docker, etc.)
+# Uncomment and customize when ready
+
+#  deploy:
+#    needs: [frontend, backend]
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Download frontend build
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: frontend-build
+#          path: frontend-build
+#
+#      - name: Download backend jar
+#        uses: actions/download-artifact@v4
+#        with:
+#          name: backend-jar
+#          path: backend-build
+#
+#      - name: Deploy step (customize)
+#        run: |
+#          echo "Deploying to server..."
+#          # Example:
+#          # scp -r frontend-build user@server:/var/www/html
+#          # scp backend-build/*.jar user@server:/app/
+#          # ssh user@server "java -jar /app/app.jar"
