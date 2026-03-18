@@ -1,30 +1,22 @@
 package com.attendance.backend.entity;
 
-<<<<<<< HEAD
-public class Student {
-    
-=======
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Document(collection = "students")
-public class Student {
+@Document(collection = "teachers")
+public class Teacher {
     @Id
     private String id;
     private String name;
-    private String rollNumber;
-    private LocalDateTime createdAt;
-    private String parentDetails;
-    private String address;
-    private String mobileNumber;
->>>>>>> a39a58e7ca679a641a1cf6d2cece10124c75ab61
+    private String email;
+    private String password;
+    private Role role;
 }
