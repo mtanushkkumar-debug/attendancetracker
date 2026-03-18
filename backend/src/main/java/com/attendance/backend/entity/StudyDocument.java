@@ -12,14 +12,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Document(collection = "students")
-public class Student {
+@Document(collection = "documents")
+public class StudyDocument {
     @Id
     private String id;
-    private String name;
-    private String rollNumber;
-    private LocalDateTime createdAt;
-    private String parentDetails;
-    private String address;
-    private String mobileNumber;
+    private String title;
+    private String fileUrl;
+    private LocalDateTime uploadedAt;
 }
