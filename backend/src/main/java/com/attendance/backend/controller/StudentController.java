@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+package com.attendance.backend.controller;
+=======
+>>>>>>> e129198e3070a4eeb3e8a3fe91bd4b99ac2df0c6
 package com.attendance.backend.controller;
 
 import com.attendance.backend.entity.Student;
@@ -48,3 +54,7 @@ public class StudentController {
         return ResponseEntity.noContent().build();
     }
 }
+<<<<<<< HEAD
+=======
+>>>>>>> a39a58e7ca679a641a1cf6d2cece10124c75ab61
+>>>>>>> e129198e3070a4eeb3e8a3fe91bd4b99ac2df0c6
